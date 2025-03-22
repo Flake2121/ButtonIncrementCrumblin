@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Increment Button</title>
+</head>
+<body>
+  <h1>Increment Button</h1>
+  <p>Current Count: <span id="counter">0</span></p>
+  <button id="incrementButton">Increment</button>
+
+  <script>
+    // Fetch the current counter value from the backend when the page loads
+    fetch('/get-counter')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('counter').innerText = data.counter;
+      });
+
+    // Event listener for button click to increment the counter
+    document.getElementById('incrementButton').addEventListener('click', function() {
+      fetch('/increment', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('counter').innerText = data.counter;
+        });
+    });
+  </script>
+</body>
+</html>
