@@ -5,16 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Global Counter</title>
 
-  <!-- Load Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-</head>
-<body>
-  <h1>Global Counter</h1>
-  <p>Count: <span id="counter">Loading...</span></p>
-  <button onclick="increment()">Increment</button>
+  <!-- Load Firebase SDK (use module format) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, updateDoc, increment, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  <script>
     // Firebase config (replace with your actual config from Firebase Console)
     const firebaseConfig = {
       apiKey: "AIzaSyBurVM7iXefPxSA6psNuYYOKwfq7CYdu0E",
@@ -26,9 +21,9 @@
     };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const counterRef = db.collection("counter").doc("global");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const counterRef = doc(db, "counter", "global");
 
     // Update the UI with the count
     function updateUI(count) {
@@ -37,22 +32,26 @@
 
     // Increment the counter in Firestore
     function increment() {
-      counterRef.update({ count: firebase.firestore.FieldValue.increment(1) })
-        .catch(error => console.error("Error incrementing count:", error));
+      updateDoc(counterRef, { count: increment(1) }).catch(error => console.error("Error incrementing count:", error));
     }
 
     // Listen for changes to the counter document in Firestore
-    counterRef.onSnapshot((doc) => {
-      if (doc.exists) {
-        console.log("Counter data:", doc.data()); // Debugging line
-        updateUI(doc.data().count);
+    onSnapshot(counterRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        console.log("Counter data:", docSnapshot.data()); // Debugging line
+        updateUI(docSnapshot.data().count);
       } else {
         console.log("No counter data found, initializing...");
-        counterRef.set({ count: 0 }).catch(error => console.error("Error initializing counter:", error));
+        setDoc(counterRef, { count: 0 }).catch(error => console.error("Error initializing counter:", error));
       }
     }, (error) => {
       console.error("Error fetching counter data:", error);
     });
   </script>
+</head>
+<body>
+  <h1>Global Counter</h1>
+  <p>Count: <span id="counter">Loading...</span></p>
+  <button onclick="increment()">Increment</button>
 </body>
 </html>
