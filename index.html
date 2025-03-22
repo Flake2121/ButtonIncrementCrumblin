@@ -11,15 +11,15 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: flex-start; /* Align at the top */
       height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
-      padding-top: 50px;
+      padding-top: 50px; /* Space from the top for the counter */
     }
 
-    /* Style for the header text */
+    /* Style for the counter text */
     h1 {
       font-size: 36px;
       color: #333;
@@ -28,7 +28,7 @@
 
     /* Style for the "Count:" text */
     #countLabel {
-      font-size: 60px;
+      font-size: 60px; /* Increased font size for "Count:" */
       color: #b82b2b;
       margin-top: 20px;
     }
@@ -42,57 +42,29 @@
 
     /* Style the button */
     button {
-      font-size: 50px;
-      padding: 20px 40px;
+      font-size: 150px;
+      padding: 40px 80px;
       background-color: red;
       color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
+      position: absolute; /* Fixed position */
+      top: 50%; /* Vertically centered */
+      left: 50%; /* Horizontally centered */
+      transform: translate(-50%, -50%); /* Adjust for exact center */
     }
 
     button:hover {
       background-color: darkred;
     }
-
-    /* Style for the username input form */
-    #usernameForm {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    #usernameForm input {
-      padding: 10px;
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    #usernameForm button {
-      font-size: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-
-    #usernameForm button:hover {
-      background-color: #0056b3;
-    }
-
-    /* Style for the scoreboard */
-    #scoreboard {
-      margin-top: 30px;
-      font-size: 18px;
-    }
   </style>
   
+  <!-- Load Firebase SDK (use module format) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, doc, updateDoc, increment, onSnapshot, setDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, updateDoc, increment, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     // Firebase config (replace with your actual config from Firebase Console)
     const firebaseConfig = {
@@ -109,100 +81,37 @@
     const db = getFirestore(app);
     const counterRef = doc(db, "counter", "global");
 
-    let currentUsername = ""; // Track the current username
-
     // Update the UI with the count
     function updateUI(count) {
       document.getElementById("counter").textContent = count;
     }
 
-    // Increment the counter and user's contribution in Firestore
+    // Increment the counter in Firestore
     function incrementCounter() {
-      if (currentUsername === "") {
-        alert("Please enter a username first.");
-        return;
-      }
-
-      // Increment the global counter
       updateDoc(counterRef, { count: increment(1) }).catch(error => console.error("Error incrementing count:", error));
-
-      // Increment the user's count
-      const userRef = doc(db, "users", currentUsername);
-      updateDoc(userRef, { count: increment(1) }).catch(error => console.error("Error incrementing user count:", error));
-
-      // Update the scoreboard
-      updateScoreboard();
     }
 
     // Listen for changes to the counter document in Firestore
     onSnapshot(counterRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
+        console.log("Counter data:", docSnapshot.data()); // Debugging line
         updateUI(docSnapshot.data().count);
       } else {
+        console.log("No counter data found, initializing...");
         setDoc(counterRef, { count: 0 }).catch(error => console.error("Error initializing counter:", error));
       }
+    }, (error) => {
+      console.error("Error fetching counter data:", error);
     });
 
-    // Function to show the counter after username is entered
-    function showCounter() {
-      const username = document.getElementById('usernameInput').value;
-      if (username.trim() === '') {
-        alert("Please enter a username!");
-        return;
-      }
-
-      currentUsername = username;
-
-      // Hide the username form
-      document.getElementById('usernameForm').style.display = 'none';
-
-      // Show the counter and button
-      document.getElementById('counterContainer').style.display = 'block';
-
-      // Set the username in the UI
-      document.getElementById('userNameDisplay').textContent = `Welcome, ${username}`;
-
-      // Initialize user document if it doesn't exist
-      const userRef = doc(db, "users", username);
-      setDoc(userRef, { username: username, count: 0 }, { merge: true });
-    }
-
-    // Fetch and update the scoreboard
-    async function updateScoreboard() {
-      const q = query(collection(db, "users"), orderBy("count", "desc"), limit(5));
-      const querySnapshot = await getDocs(q);
-      let scoreboardHtml = "<h3>Top Contributors:</h3><ul>";
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        scoreboardHtml += `<li>${data.username}: ${data.count} clicks</li>`;
-      });
-
-      scoreboardHtml += "</ul>";
-      document.getElementById("scoreboard").innerHTML = scoreboardHtml;
-    }
-
     // Make incrementCounter globally accessible
-    window.incrementCounter = incrementCounter;
+    window.incrementCounter = incrementCounter; // Expose to the global scope
   </script>
 </head>
 <body>
   <h1>James Counter™   BETA</h1>
-
-  <!-- Username input form -->
-  <div id="usernameForm">
-    <input type="text" id="usernameInput" placeholder="Enter your username" />
-    <button onclick="showCounter()">Submit</button>
-  </div>
-
-  <!-- Counter and button (hidden initially) -->
-  <div id="counterContainer" style="display:none; text-align:center;">
-    <h2 id="userNameDisplay"></h2>
-    <h2><span id="counter">Loading...</span></h2>
-    <button onclick="incrementCounter()">Add</button>
-  </div>
-
-  <!-- Scoreboard (hidden initially) -->
-  <div id="scoreboard" style="display:none;"></div>
+  <h2><span id="counter">Loading...</span></h2>
+  <br></br>
+  <button onclick="incrementCounter()">Add</button>
 </body>
 </html>
