@@ -4,7 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Global Counter</title>
+  
+  <style>
+    /* Center the content */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
 
+    /* Style the button */
+    button {
+      font-size: 24px;
+      padding: 20px 40px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: darkred;
+    }
+
+    /* Style the counter text */
+    h1 {
+      font-size: 36px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* Center the counter text */
+    #counter {
+      font-size: 40px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+  
   <!-- Load Firebase SDK (use module format) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
