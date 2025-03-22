@@ -6,45 +6,58 @@
   <title>Global Counter</title>
   
   <style>
-    /* Center the content */
+    /* Center the body content */
     body {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: flex-start; /* Align at the top */
       height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
+      padding-top: 50px; /* Space from the top for the counter */
+    }
+
+    /* Style for the counter text */
+    h1 {
+      font-size: 36px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    /* Style for the "Count:" text */
+    #countLabel {
+      font-size: 60px; /* Increased font size for "Count:" */
+      color: #b82b2b;
+      margin-top: 20px;
+    }
+
+    /* Style for the counter number */
+    #counter {
+      font-size: 150px;
+      font-weight: bold;
+      color: #333;
     }
 
     /* Style the button */
     button {
-      font-size: 24px;
-      padding: 20px 40px;
+      font-size: 150px;
+      padding: 40px 80px;
       background-color: red;
       color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
+      position: absolute; /* Fixed position */
+      top: 50%; /* Vertically centered */
+      left: 50%; /* Horizontally centered */
+      transform: translate(-50%, -50%); /* Adjust for exact center */
     }
 
     button:hover {
       background-color: darkred;
-    }
-
-    /* Style the counter text */
-    h1 {
-      font-size: 36px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    /* Center the counter text */
-    #counter {
-      font-size: 40px;
-      font-weight: bold;
-      color: #333;
     }
   </style>
   
@@ -96,8 +109,9 @@
   </script>
 </head>
 <body>
-  <h1>Global Counter</h1>
-  <p>Count: <span id="counter">Loading...</span></p>
-  <button onclick="incrementCounter()">Increment</button>
+  <h1>James Counter™   BETA</h1>
+  <h2><span id="counter">Loading...</span></h2>
+  <br></br>
+  <button onclick="incrementCounter()">Add</button>
 </body>
 </html>
