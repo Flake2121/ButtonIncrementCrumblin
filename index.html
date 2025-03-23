@@ -6,62 +6,60 @@
   <title>James Counter™ BETA</title>
   
   <style>
-/* Center the body content */
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center both vertically and horizontally */
-    height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    background-size: cover; /* Make background cover the entire body */
-    background-position: center center; /* Center the background image */
-    transition: background-image 0.5s ease-in-out; /* Smooth background transition */
-  }
-  
-  /* Style for the main title */
-  h1 {
-    font-size: 48px;
-    color: #fff;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Style for the counter value */
-  #counter {
-    font-size: 150px;
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  /* Style for the button */
-  button {
-    font-size: 80px; /* Slightly smaller than the counter */
-    padding: 40px 80px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-  }
-  
-  button:hover {
-    background-color: darkred;
-  }
-  
-  /* Style for the version number */
-  #version {
+    /* Center the body content */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* Center both vertically and horizontally */
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-size: cover; /* Make background cover the entire body */
+      transition: background-image 0.5s ease-in-out; /* Smooth background transition */
+    }
+
+    /* Style for the main title */
+    h1 {
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Style for the counter value */
+    #counter {
+      font-size: 150px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    /* Style for the button */
+    button {
+      font-size: 80px; /* Slightly smaller than the counter */
+      padding: 40px 80px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: darkred;
+    }
+
+    /* Style for the version number */
+    #version {
     position: absolute;
     bottom: 20px;
     right: 20px;
     font-size: 14px;
     color: #ffffff;
-}
-
+    }
   </style>
   
   <!-- Load Firebase SDK (use module format) -->
