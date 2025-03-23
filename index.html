@@ -157,32 +157,33 @@ document.body.style.backgroundImage = backgroundImage;
     }
 
     // Create a falling image effect
-    function createFallingImage() {
-      const img = document.createElement("img");
-      
-      // Pick a random image
-      const randomIndex = Math.floor(Math.random() * imageUrls.length);
-      img.src = imageUrls[randomIndex];
-      
-      img.className = "falling-image";
+function createFallingImage() {
+  const img = document.createElement("img");
+  
+  // Pick a random image
+  const randomIndex = Math.floor(Math.random() * imageUrls.length);
+  img.src = imageUrls[randomIndex];
+  
+  img.className = "falling-image";
 
-      // Random horizontal drift and starting position
-      const drift = (Math.random() - 0.5) * 600;
-      const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 100;
+  // Random horizontal drift (both left and right)
+  const drift = (Math.random() - 0.5) * 600; // Random drift
+  
+  // Random starting position on the X axis (within the screen width)
+  const startX = Math.random() * window.innerWidth;
+  
+  // Random starting position on the Y axis (within the bottom of the screen)
+  const startY = window.innerHeight * 0.8 + Math.random() * 100; // Random position near the bottom
+  
+  img.style.left = `${startX}px`; // Random horizontal position
+  img.style.bottom = `${startY}px`; // Random vertical position near the bottom
+  img.style.setProperty("--drift", `${drift}px`);
 
-      img.style.left = `${startX}px`;
-      img.style.setProperty("--drift", `${drift}px`);
+  document.body.appendChild(img);
 
-      document.body.appendChild(img);
-
-      // Remove the image after animation completes
-      setTimeout(() => img.remove(), 1500);
-    }
-
-    // Increment the counter in Firestore
-    function incrementCounter() {
-      updateDoc(counterRef, { count: increment(1) }).catch(error => console.error("Error incrementing count:", error));
-    }
+  // Remove the image after animation completes
+  setTimeout(() => img.remove(), 5000); // Ensure the image is removed after it finishes
+}
 
     // Listen for changes to the counter document in Firestore
     onSnapshot(counterRef, (docSnapshot) => {
