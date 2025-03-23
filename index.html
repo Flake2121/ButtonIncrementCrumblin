@@ -6,62 +6,87 @@
   <title>James Counter™ BETA</title>
   
   <style>
-/* Center the body content */
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center both vertically and horizontally */
-    height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    background-size: cover; /* Make background cover the entire body */
-    background-position: center center; /* Center the background image */
-    transition: background-image 0.5s ease-in-out; /* Smooth background transition */
-  }
-  
-  /* Style for the main title */
-  h1 {
-    font-size: 48px;
-    color: #fff;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Style for the counter value */
-  #counter {
-    font-size: 150px;
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  /* Style for the button */
-  button {
-    font-size: 80px; /* Slightly smaller than the counter */
-    padding: 40px 80px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-  }
-  
-  button:hover {
-    background-color: darkred;
-  }
-  
-  /* Style for the version number */
-  #version {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    font-size: 14px;
-    color: #ffffff;
-}
+    /* Center the body content */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* Center both vertically and horizontally */
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-size: cover; 
+      background-position: center center; 
+      transition: background-image 0.5s ease-in-out; 
+      overflow: hidden;
+    }
+    
+    h1 {
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    #counter {
+      font-size: 150px;
+      font-weight: bold;
+      color: #fff;
+    }
+    
+    button {
+      font-size: 80px;
+      padding: 40px 80px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+    
+    button:hover {
+      background-color: darkred;
+    }
+    
+    #version {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 14px;
+      color: #ffffff;
+    }
 
+    /* Falling image effect with random horizontal movement and size increase */
+    .falling-image {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      pointer-events: none;
+      animation: fallAndGrow 5s ease-out forwards, spin 5s linear;
+    }
+
+    @keyframes fallAndGrow {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--drift), 400px) scale(3); /* Scale to 3x size */
+        opacity: 0;
+      }
+    }
+
+    @keyframes spin {
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: 360deg;
+      }
+    }
   </style>
   
   <!-- Load Firebase SDK (use module format) -->
@@ -84,35 +109,43 @@ body {
     const db = getFirestore(app);
     const counterRef = doc(db, "counter", "global");
 
+    // List of images to randomly pick from
+    const imageUrls = [
+      "https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/jamesfall.jpg",
+      "https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/jamesfall2.jpg",
+      "https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/jamesfall3.jpg",
+      "https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/jamesfall4.jpg",
+      "https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/jamesfall5.jpg"
+    ];
+
     // Update the UI with the count
     function updateUI(count) {
-      // Update the counter display
       document.getElementById("counter").textContent = count;
 
-      // Dynamically change the background based on the count
-      let backgroundImage = "";
-
-    if (count >= 10000) {
-      backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-10000.jpg')";
-    } else if (count >= 5000) {
-      backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-5000.jpg')";
-    } else if (count >= 1000) {
-    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
-    } else if (count >= 200) {
-    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-200.jpg')";
-    } else if (count >= 100) {
-    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-100.jpg')";
-    } else if (count >= 70) {
-    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
-    } else if (count >= 69) {
-    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-69.jpg')";
-    } else {
-      backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
+      createFallingImage();
     }
 
+    // Create a falling image effect
+    function createFallingImage() {
+      const img = document.createElement("img");
+      
+      // Pick a random image
+      const randomIndex = Math.floor(Math.random() * imageUrls.length);
+      img.src = imageUrls[randomIndex];
+      
+      img.className = "falling-image";
 
-      // Set the background image dynamically
-      document.body.style.backgroundImage = backgroundImage;
+      // Random horizontal drift and starting position
+      const drift = (Math.random() - 0.5) * 600;
+      const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 100;
+
+      img.style.left = `${startX}px`;
+      img.style.setProperty("--drift", `${drift}px`);
+
+      document.body.appendChild(img);
+
+      // Remove the image after animation completes
+      setTimeout(() => img.remove(), 1500);
     }
 
     // Increment the counter in Firestore
@@ -123,7 +156,7 @@ body {
     // Listen for changes to the counter document in Firestore
     onSnapshot(counterRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
-        console.log("Counter data:", docSnapshot.data()); // Debugging line
+        console.log("Counter data:", docSnapshot.data());
         updateUI(docSnapshot.data().count);
       } else {
         console.log("No counter data found, initializing...");
@@ -134,7 +167,7 @@ body {
     });
 
     // Make incrementCounter globally accessible
-    window.incrementCounter = incrementCounter; // Expose to the global scope
+    window.incrementCounter = incrementCounter;
   </script>
 </head>
 <body>
