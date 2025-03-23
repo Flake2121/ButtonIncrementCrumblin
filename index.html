@@ -123,6 +123,30 @@
       document.getElementById("counter").textContent = count;
 
       createFallingImage();
+      // Dynamically change the background based on the count
+let backgroundImage = "";
+
+if (count >= 10000) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-10000.jpg')";
+} else if (count >= 5000) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-5000.jpg')";
+} else if (count >= 1000) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
+} else if (count >= 200) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-200.jpg')";
+} else if (count >= 100) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-100.jpg')";
+} else if (count >= 70) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
+} else if (count >= 69) {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-69.jpg')";
+} else {
+  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
+}
+
+// Apply the background image
+document.body.style.backgroundImage = backgroundImage;
+
     }
 
     // Create a falling image effect
