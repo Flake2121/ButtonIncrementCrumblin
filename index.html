@@ -39,7 +39,6 @@
       text-align: center;
     }
     
-    
     #counter {
       font-family: James;
       font-size: 150px;
@@ -71,35 +70,34 @@
       color: #ffffff;
     }
 
-/* Falling image effect with random horizontal movement and size increase */
-.falling-image {
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  pointer-events: none;
-  animation: fallAndGrow 5s ease-out forwards, spin 5s linear;
-}
+    /* Falling image effect with random horizontal movement and size increase */
+    .falling-image {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      pointer-events: none;
+      animation: fallAndGrow 5s ease-out forwards, spin 5s linear;
+    }
 
-@keyframes fallAndGrow {
-  0% {
-    transform: translate(var(--drift), 0) scale(1); /* Start from the bottom */
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--drift), 800px) scale(3); /* Scale to 3x size */
-    opacity: 0;
-  }
-}
+    @keyframes fallAndGrow {
+      0% {
+        transform: translate(var(--drift), 0) scale(1); /* Start from the bottom */
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--drift), 800px) scale(3); /* Scale to 3x size */
+        opacity: 0;
+      }
+    }
 
-@keyframes spin {
-  from {
-    rotate: 0deg;
-  }
-  to {
-    rotate: 360deg;
-  }
-}
-
+    @keyframes spin {
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: 360deg;
+      }
+    }
   </style>
   
   <!-- Load Firebase SDK (use module format) -->
@@ -137,70 +135,76 @@
 
       createFallingImage();
       // Dynamically change the background based on the count
-let backgroundImage = "";
+      let backgroundImage = "";
 
-if (count >= 10000) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-10000.jpg')";
-} else if (count >= 5000) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-5000.jpg')";
-} else if (count >= 2002) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
-} else if (count >= 2001) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-2001.jpg')";
-} else if (count >= 1000) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
-} else if (count >= 500) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-500.jpg')";
-} else if (count >= 200) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-200.jpg')";
-} else if (count >= 100) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-100.jpg')";
-} else if (count >= 70) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
-} else if (count >= 69) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-69.jpg')";
-} else {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
-}
+      if (count >= 10000) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-10000.jpg')";
+      } else if (count >= 5000) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-5000.jpg')";
+      } else if (count >= 2002) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
+      } else if (count >= 2001) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-2001.jpg')";
+      } else if (count >= 1000) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
+      } else if (count >= 500) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-500.jpg')";
+      } else if (count >= 200) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-200.jpg')";
+      } else if (count >= 100) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-100.jpg')";
+      } else if (count >= 70) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
+      } else if (count >= 69) {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-69.jpg')";
+      } else {
+        backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
+      }
 
-
-// Apply the background image
-document.body.style.backgroundImage = backgroundImage;
-
+      // Apply the background image
+      document.body.style.backgroundImage = backgroundImage;
     }
 
-// Create a falling image effect
-function createFallingImage() {
-  const img = document.createElement("img");
-  
-  // Pick a random image
-  const randomIndex = Math.floor(Math.random() * imageUrls.length);
-  img.src = imageUrls[randomIndex];
-  
-  img.className = "falling-image";
+    // Create a falling image effect
+    function createFallingImage() {
+      const img = document.createElement("img");
+      
+      // Pick a random image
+      const randomIndex = Math.floor(Math.random() * imageUrls.length);
+      img.src = imageUrls[randomIndex];
+      
+      img.className = "falling-image";
 
-  // Random horizontal drift (both left and right)
-  const drift = (Math.random() - 0.5) * 600; // Random drift
-  
-  // Random starting position on the X axis (within the screen width)
-  const startX = Math.random() * window.innerWidth;
-  
-  // Random starting position on the Y axis (within the bottom of the screen)
-  const startY = window.innerHeight * 0.8 + Math.random() * 100; // Random position near the bottom
-  
-  img.style.left = `${startX}px`; // Random horizontal position
-  img.style.bottom = `${startY}px`; // Random vertical position near the bottom
-  img.style.setProperty("--drift", `${drift}px`);
+      // Random horizontal drift (both left and right)
+      const drift = (Math.random() - 0.5) * 600; // Random drift
+      
+      // Random starting position on the X axis (within the screen width)
+      const startX = Math.random() * window.innerWidth;
+      
+      // Random starting position on the Y axis (within the bottom of the screen)
+      const startY = window.innerHeight * 0.8 + Math.random() * 100; // Random position near the bottom
+      
+      img.style.left = `${startX}px`; // Random horizontal position
+      img.style.bottom = `${startY}px`; // Random vertical position near the bottom
+      img.style.setProperty("--drift", `${drift}px`);
 
-  document.body.appendChild(img);
+      document.body.appendChild(img);
 
-  // Remove the image after animation completes
-  setTimeout(() => img.remove(), 5000); // Ensure the image is removed after it finishes
-}
+      // Remove the image after animation completes
+      setTimeout(() => img.remove(), 5000); // Ensure the image is removed after it finishes
+    }
+
+    // Function to play the MP3
+    function playAudio() {
+      const audio = new Audio('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/click1.mp3'); // Replace with your MP3 URL
+      audio.play();
+    }
 
     // Increment the counter in Firestore
     function incrementCounter() {
-      updateDoc(counterRef, { count: increment(1) }).catch(error => console.error("Error incrementing count:", error));
+      updateDoc(counterRef, { count: increment(1) }).then(() => {
+        playAudio();  // Play sound after increment
+      }).catch(error => console.error("Error incrementing count:", error));
     }
 
     // Listen for changes to the counter document in Firestore
