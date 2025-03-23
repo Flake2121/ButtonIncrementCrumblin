@@ -59,34 +59,35 @@
       color: #ffffff;
     }
 
-    /* Falling image effect with random horizontal movement and size increase */
-    .falling-image {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      pointer-events: none;
-      animation: fallAndGrow 5s ease-out forwards, spin 5s linear;
-    }
+/* Falling image effect with random horizontal movement and size increase */
+.falling-image {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  animation: fallAndGrow 5s ease-out forwards, spin 5s linear;
+}
 
-    @keyframes fallAndGrow {
-      0% {
-        transform: translate(0, 30) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(var(--drift), 400px) scale(10); /* Scale to 3x size */
-        opacity: 0;
-      }
-    }
+@keyframes fallAndGrow {
+  0% {
+    transform: translate(var(--drift), 0) scale(1); /* Start from the bottom */
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift), 800px) scale(3); /* Scale to 3x size */
+    opacity: 0;
+  }
+}
 
-    @keyframes spin {
-      from {
-        rotate: 0deg;
-      }
-      to {
-        rotate: 360deg;
-      }
-    }
+@keyframes spin {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+
   </style>
   
   <!-- Load Firebase SDK (use module format) -->
