@@ -51,6 +51,15 @@
     button:hover {
       background-color: darkred;
     }
+
+    /* Style for the version number */
+    #version {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    color: #ffffff;
+    }
   </style>
   
   <!-- Load Firebase SDK (use module format) -->
@@ -124,5 +133,6 @@
   <h1>James Counter™ BETA</h1>
   <h2><span id="counter">Loading...</span></h2>
   <button onclick="incrementCounter()">Add</button>
+  <div id="version">Version 0.1J</div>
 </body>
 </html>
