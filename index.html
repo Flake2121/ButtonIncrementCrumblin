@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>James Counter™</title>
+  <title>Global Counter</title>
   
   <style>
     /* Center the body content */
@@ -11,38 +11,33 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Align at the top */
+      justify-content: center; /* Center both vertically and horizontally */
       height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
-      padding-top: 50px; /* Space from the top for the counter */
+      background-size: cover; /* Make background cover the entire body */
+      transition: background-image 0.5s ease-in-out; /* Smooth background transition */
     }
 
-    /* Style for the counter text */
+    /* Style for the main title */
     h1 {
-      font-size: 36px;
-      color: #333;
-      margin-bottom: 10px;
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
-    /* Style for the "Count:" text */
-    #countLabel {
-      font-size: 60px; /* Increased font size for "Count:" */
-      color: #b82b2b;
-      margin-top: 20px;
-    }
-
-    /* Style for the counter number */
+    /* Style for the counter value */
     #counter {
       font-size: 150px;
       font-weight: bold;
-      color: #333;
+      color: #fff;
     }
 
-    /* Style the button */
+    /* Style for the button */
     button {
-      font-size: 150px;
+      font-size: 80px; /* Slightly smaller than the counter */
       padding: 40px 80px;
       background-color: red;
       color: white;
@@ -50,10 +45,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
-      position: absolute; /* Fixed position */
-      top: 50%; /* Vertically centered */
-      left: 50%; /* Horizontally centered */
-      transform: translate(-50%, -50%); /* Adjust for exact center */
+      margin-top: 20px;
     }
 
     button:hover {
@@ -83,7 +75,27 @@
 
     // Update the UI with the count
     function updateUI(count) {
+      // Update the counter display
       document.getElementById("counter").textContent = count;
+
+      // Dynamically change the background based on the count
+      let backgroundImage = "";
+
+    if (count >= 10000) {
+      backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-10000.jpg')";
+    } else if (count >= 5000) {
+      backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-5000.jpg')";
+    } else if (count >= 1000) {
+    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
+    } else if (count >= 100) {
+    backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-100.jpg')";
+    } else {
+      backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/default-background.jpg')";
+    }
+
+
+      // Set the background image dynamically
+      document.body.style.backgroundImage = backgroundImage;
     }
 
     // Increment the counter in Firestore
@@ -109,9 +121,8 @@
   </script>
 </head>
 <body>
-  <h1>James Counter™   BETA</h1>
+  <h1>James Counter™ BETA</h1>
   <h2><span id="counter">Loading...</span></h2>
-  <br></br>
   <button onclick="incrementCounter()">Add</button>
 </body>
 </html>
