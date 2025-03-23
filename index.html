@@ -131,10 +131,6 @@ if (count >= 10000) {
   backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-10000.jpg')";
 } else if (count >= 5000) {
   backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-5000.jpg')";
-} else if (count >= 2002) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
-} else if (count >= 2001) {
-  backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-2001.jpg')";
 } else if (count >= 1000) {
   backgroundImage = "url('https://raw.githubusercontent.com/flake2121/ButtonIncrementCrumblin/main/background-1000.jpg')";
 } else if (count >= 500) {
@@ -156,7 +152,7 @@ document.body.style.backgroundImage = backgroundImage;
 
     }
 
-    // Create a falling image effect
+// Create a falling image effect
 function createFallingImage() {
   const img = document.createElement("img");
   
@@ -184,6 +180,11 @@ function createFallingImage() {
   // Remove the image after animation completes
   setTimeout(() => img.remove(), 5000); // Ensure the image is removed after it finishes
 }
+
+    // Increment the counter in Firestore
+    function incrementCounter() {
+      updateDoc(counterRef, { count: increment(1) }).catch(error => console.error("Error incrementing count:", error));
+    }
 
     // Listen for changes to the counter document in Firestore
     onSnapshot(counterRef, (docSnapshot) => {
